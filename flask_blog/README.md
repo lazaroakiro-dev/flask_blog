@@ -7,10 +7,8 @@ Modular blogging plataform built with Flask, designed for scalable deployment.
 - Template inheritance for maintainable layout.
 
 ## Tech Stack
-| Layer     | Tools                     |
-|---------------------------------------|
-| Backend   | Flask, Jinja2, SQLAlchemy |
-| Frontennd | Bootstrap 5, HTML5, CSS3  |
+| Backend > Flask, Jinja2, SQLAlchemy |
+| Frontennd > Bootstrap 5, HTML5, CSS3 |
 
 ## Installation
 ```bash
@@ -22,21 +20,7 @@ flask run
 ```
 
 ## Project Structure
-flask_blog/
-    app/
-        about/
-        contact/
-        helpers/
-        main/
-        models/
-        services/
-        static/
-        templates/
-        __init__.py
-        extensions.py
-config.py
-requirements.txt
-run.py
+flask_blog/[app/(about/, contact/, helpers/, main/, models/, services/, static/, templates/, __init__.py, extensions.py), config.py, requirements.txt, run.py]
 
 ## Contact
 Created by Lazaro - lazaro.especialista@gmail.com
