@@ -14,7 +14,7 @@ Modular blogging plataform built with Flask, designed for scalable deployment.
 ```bash
 git clone https://github.com/yourusername/flask_blog.git
 python -m venv .venv
-source .venv\Scripts\activate
+.venv\Scripts\activate
 pip install -r requirements.txt
 flask run
 ```
