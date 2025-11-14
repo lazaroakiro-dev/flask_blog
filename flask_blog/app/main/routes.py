@@ -75,3 +75,34 @@ def downvote_post(post_id):
     return redirect(url_for("main.feed"))
 
 
+@main_bp.route("/post/<int:post_id>/comments", methods=["POST"])
+@login_required
+def add_comment(post_id):
+    comment_text = request.form.get("comment", "").strip()
+    
+    if not comment_text:
+        flash("Comment cannot be empty.", "warning")
+        return redirect(url_for("main.feed"))
+    
+    comment = Comment(content=comment_text, user_id=current_user.id, post_id=post_id)
+    blog_db.session.add(comment)
+    blog_db.session.commit()
+    
+    flash("Comment added!", "success")
+    return redirect(url_for("main.feed"))
+
+
+@main_bp.route("/comments/<int:comment_id>/delete", methods=["POST"])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    
+    # Only allow the author to delete
+    if comment.user.id != current_user.id:
+        flash("You cannot delete this comment.", "danger")
+        return redirect(url_for("main.feed"))
+    
+    blog_db.session.delete(comment)
+    blog_db.session.commit()
+    flash("Comment deleted successfully.", "success")
+    return redirect(url_for("main.feed"))

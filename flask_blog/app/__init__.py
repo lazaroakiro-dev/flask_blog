@@ -1,6 +1,7 @@
 from flask import Flask
 
 from .extensions import blog_db, login_manager
+from . extensions import migrate
 from .main.routes import main_bp
 from .about.routes import about_bp
 from .contact.routes import contact_bp
@@ -13,9 +14,8 @@ def create_app():
     app.config.from_object("config.DevConfig")
     
     blog_db.init_app(app)
-    with app.app_context():
-        blog_db.create_all()
-    init_auth(app)
+    init_auth(app)  # Login manager initialization
+    migrate.init_app(app)
     
     app.register_blueprint(main_bp)
     app.register_blueprint(about_bp)
