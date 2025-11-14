@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Top Posts</h2>
+    <a href="{{ url_for('main.create_post') }}" class="btn btn-success">
+      [+] New Post
+    </a>
+  </div>
+
+  {% for item in feed_data %}
+    <div class="card mb-4 shadow-sm">
+      <!-- Post content -->
+      <div class="card-body">
+        <h4 class="card-title">{{ item.post.title }}</h4>
+        <p class="card-text">{{ item.post.content }}</p>
+        <small class="text-muted">
+          By {{ item.post.author }} | Votes: {{ item.post.votes }} | {{ item.post.created_at.strftime('%Y-%m-%d') }}
+        </small>
+
+        <!-- Voting buttons go here, INSIDE the card-body -->
+        <div class="mt-2">
+          <form method="POST" action="{{ url_for('main.upvote_post', post_id=item.post.id) }}" class="d-inline">
+            <button type="submit" class="btn btn-sm btn-outline-success">▲ Upvote</button>
+          </form>
+          <form method="POST" action="{{ url_for('main.downvote_post', post_id=item.post.id) }}" class="d-inline">
+            <button type="submit" class="btn btn-sm btn-outline-danger">▼ Downvote</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Top voted comment -->
+      {% if item.top_comment %}
+        <div class="card m-3 border-primary">
+          <div class="card-body">
+            <strong>{{ item.top_comment.author }}</strong>
+            <p>{{ item.top_comment.content }}</p>
+            <small class="text-muted">Votes: {{ item.top_comment.votes }}</small>
+          </div>
+        </div>
+      {% endif %}
+
+      <!-- More comments -->
+      {% if item.other_comments %}
+        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#comments-{{ item.post.id }}">
+          More comments
+        </button>
+        <div class="collapse" id="comments-{{ item.post.id }}">
+          {% for comment in item.other_comments %}
+            <div class="card m-3">
+              <div class="card-body">
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.content }}</p>
+                <small class="text-muted">Votes: {{ comment.votes }}</small>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -23,7 +23,7 @@ def auth():
         if user:
             login_user(user)
             flash("Logged in successfully", "success")
-            return redirect(url_for("main.main"))
+            return redirect(url_for("main.feed"))
         else:
             flash("Invalid username or password", "danger")
             return redirect(url_for("auth.login"))
