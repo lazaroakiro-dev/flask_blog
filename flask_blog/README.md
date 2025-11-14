@@ -11,6 +11,7 @@
 - Responsive UI with Bootstrap 5.
 - Template inheritance for maintainable layout.
 - Multi-tenat authentication via login page and registration.
+- Comment management.
 - SQLAlchemy ORM integration.
 
 ## Tech Stack
@@ -29,12 +30,9 @@ flask run
 ```
 
 ## Screenshots
-![Screenshot](docs/images/image1.png)
-- A simple UI straightfoward login page.
-![Screenshot](docs/images/image2.png)
-- Feed you can only see when authenticated, then you can interact.
-![Screenshot](docs/images/image3.png)
-- The register page, where the users input their credentials.
+![Login Screenshot](app/docs/images/image1.png)
+![Feed Screenshot](app/docs/images/image2.png)
+![Register Screenshot](app/docs/images/image3.png)
 
 ## Project Structure
 flask_blog/
@@ -54,6 +52,10 @@ flask_blog/
 |-- config.py
 |-- requirements.txt
 |-- run.py
+
+## Highlights
+- Relationship Best Practices: Implemented explicit foreign keys, bidirectional relationships with back_populates, and optimized lazy loading strategies to ensure scalable, performant queries.
+- User Model Integration: Combined SQLAlchemy’s Model with Flask‑Login’s UserMixin to create a secure, database‑backed user system.
 
 ## License
 - MIT License © 2025 Lazaro

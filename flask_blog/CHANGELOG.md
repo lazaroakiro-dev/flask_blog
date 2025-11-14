@@ -1,3 +1,16 @@
+## [v1.3.0] - 2025-11-14
+### Added Coments
+- Add comment button inside "feed.html".
+- Add comment route.
+- Add delete comment button inside "feed.html".
+- Add delete comment route.
+
+## [v1.2.2] - 2025-11-14
+### Added Feed
+- Add feed logic
+- Add post logic
+- Add upvote, downvote logic
+
 ## [v1.2.0] - 2025-11-12
 ### Added Auth
 - Added flask-login for sessions.
