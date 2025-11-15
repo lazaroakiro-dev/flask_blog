@@ -1,5 +1,6 @@
 import os
 
+
 class DevConfig:
     DEBUG = True
     SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-key-for-dev")

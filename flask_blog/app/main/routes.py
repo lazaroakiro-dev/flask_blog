@@ -6,29 +6,16 @@ from flask_login import login_required, current_user
 from app.models import Post, Comment
 from app.extensions import blog_db
 from app.services import PostService, VoteService
+from app.helpers import PostHelper, CommentHelper
+from app.services import CommentService
 
 
 main_bp = Blueprint("main", __name__, template_folder="templates")
 
-
 @main_bp.route("/")
 @login_required
 def feed():
-    posts = Post.query.order_by(Post.votes.desc(), Post.created_at.desc()).all()
-    
-    feed_data = []
-    for post in posts:
-        top_comment = Comment.query.filter_by(post_id=post.id)\
-            .order_by(Comment.votes.desc())\
-            .first()
-        other_comments = Comment.query.filter_by(post_id=post.id)\
-            .order_by(Comment.votes.desc())\
-            .all()[1:]
-        feed_data.append({
-            "post": post,
-            "top_comment": top_comment,
-            "other_comments": other_comments
-        })
+    feed_data = PostService.feed_creation()
     return render_template("main/feed.html", feed_data=feed_data)
 
 
@@ -39,21 +26,9 @@ def create_post():
         title = request.form.get("title")
         content = request.form.get("content")
         
-        if not title or not content:
-            flash("Title and content are required", "danger")
-            return redirect(url_for("main.create_post"))
+        PostHelper.New_Post_Validation(title=title, content=content)
         
-        # Create new post
-        new_post = Post(
-            title=title,
-            content=content,
-            author=current_user.username,
-            votes=0
-        )
-        blog_db.session.add(new_post)
-        blog_db.session.commit()
-        
-        flash("Post created successfully", "success")
+        PostService.create_post(title=title, content=content, author=current_user.username)
         return redirect(url_for("main.feed"))
 
     return render_template("main/create_post.html")
@@ -80,29 +55,13 @@ def downvote_post(post_id):
 def add_comment(post_id):
     comment_text = request.form.get("comment", "").strip()
     
-    if not comment_text:
-        flash("Comment cannot be empty.", "warning")
-        return redirect(url_for("main.feed"))
-    
-    comment = Comment(content=comment_text, user_id=current_user.id, post_id=post_id)
-    blog_db.session.add(comment)
-    blog_db.session.commit()
-    
-    flash("Comment added!", "success")
+    CommentHelper.create_comment_validation(comment_text)
+    CommentService.create_new_comment(comment_text, post_id)
     return redirect(url_for("main.feed"))
 
 
 @main_bp.route("/comments/<int:comment_id>/delete", methods=["POST"])
 @login_required
 def delete_comment(comment_id):
-    comment = Comment.query.get_or_404(comment_id)
-    
-    # Only allow the author to delete
-    if comment.user.id != current_user.id:
-        flash("You cannot delete this comment.", "danger")
-        return redirect(url_for("main.feed"))
-    
-    blog_db.session.delete(comment)
-    blog_db.session.commit()
-    flash("Comment deleted successfully.", "success")
+    CommentService.author_comment_delete(comment_id=comment_id)
     return redirect(url_for("main.feed"))

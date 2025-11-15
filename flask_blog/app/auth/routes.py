@@ -20,6 +20,7 @@ def auth():
         password = request.form.get("password")
 
         user = authenticate_user(username, password)
+        
         if user:
             login_user(user)
             flash("Logged in successfully", "success")
@@ -27,7 +28,9 @@ def auth():
         else:
             flash("Invalid username or password", "danger")
             return redirect(url_for("auth.login"))
+        
     return render_template("login.html")
+
 
 @auth_bp.route("/logout", methods=["POST"], endpoint="logout")
 def logout():
@@ -52,4 +55,5 @@ def register():
         create_user(username, email, password)
         flash("Registration successful. You can now log in", "success")
         return redirect(url_for("auth.login"))
+    
     return render_template("register.html")

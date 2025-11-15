@@ -1,3 +1,9 @@
+## [v1.3.1]
+### Cleanup Code
+- Clean up models code.
+- Delegate code in main/routes to helpers, services.
+- Fixed a bug where empty comments were allowed.
+
 ## [v1.3.0] - 2025-11-14
 ### Added Coments
 - Add comment button inside "feed.html".

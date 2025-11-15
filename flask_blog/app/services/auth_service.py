@@ -11,6 +11,7 @@ def authenticate_user(username, password):
         return user
     return None
 
+
 def validate_registration(username, email, password, confirm):
     if not username or not email or not password:
         return "All fields are required", "danger"
@@ -21,6 +22,7 @@ def validate_registration(username, email, password, confirm):
     if User.query.filter_by(email=email).first():
         return "Email already registered", "warning"
     return None, None
+
 
 def create_user(username, email, password):
     new_user = User(

@@ -5,6 +5,7 @@ from app.extensions import blog_db
 class VoteService:
     @staticmethod
     def cast_vote(user_id, post_id, value):
+        
         # Check if user already voted
         existing_vote = Vote.query.filter_by(user_id=user_id, post_id=post_id).first()
         if existing_vote:
