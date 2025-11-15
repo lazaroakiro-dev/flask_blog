@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 80vh;">
+
     <form method="POST"
           action="{{ url_for('auth.login') }}"
           class="w-50"
           id="loginForm"
           autocomplete="off">
+
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text"
@@ -17,6 +20,7 @@
                    inputmode="text"
                    required>
         </div>
+
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password"
@@ -26,6 +30,7 @@
                    autocomplete="off"
                    required>
         </div>
+
         <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
 

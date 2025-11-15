@@ -55,14 +55,11 @@ class Comment(blog_db.Model):
     # Relationships
     user = blog_db.relationship("User", back_populates="comments")
     post = blog_db.relationship("Post", back_populates="comments")
+    parent = blog_db.relationship("Comment", back_populates="replies", remote_side=[id])
 
     # Nested Replies
     parent_id = blog_db.Column(blog_db.Integer, blog_db.ForeignKey("comments.id"), nullable=True)
-    replies = blog_db.relationship(
-        "Comment",
-        backref=blog_db.backref("parent", remote_side=[id]),
-        lazy="dynamic"
-    )
+    replies = blog_db.relationship("Comment", back_populates="parent")
 
 
 class Vote(blog_db.Model):
@@ -78,6 +75,4 @@ class Vote(blog_db.Model):
     post = blog_db.relationship("Post", back_populates="votes_rel")
 
     # Prevent duplicate votes per user/post
-    __table_args__ = (
-        blog_db.UniqueConstraint("user_id", "post_id", name="unique_user_post_vote"),
-    )
+    __table_args__ = (blog_db.UniqueConstraint("user_id", "post_id", name="unique_user_post_vote"),)

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
- 
+
 
 about_bp = Blueprint("about", __name__, template_folder="templates")
 
