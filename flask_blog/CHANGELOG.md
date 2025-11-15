@@ -1,4 +1,9 @@
-## [v1.3.1]
+## [v1.3.3]
+### Added Custom Error Pages
+- 404 Page Not Found
+- 500 Interal Server Error
+
+## [v1.3.2]
 ### Cleanup Code
 - Clean up models code.
 - Delegate code in main/routes to helpers, services.
