@@ -5,20 +5,20 @@ from flask_login import login_required, login_user
 from flask_login import logout_user
 from werkzeug.security import check_password_hash
 
-from app.models import User
-from app.extensions import blog_db
 from app.services import authenticate_user, validate_registration
 from app.services import create_user
+from app.services import LoginForm
  
 
 auth_bp = Blueprint("auth", __name__, template_folder="templates")
 
 @auth_bp.route("/login", methods=["GET", "POST"], endpoint="login")
 def auth():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        
         user = authenticate_user(username, password)
         
         if user:
@@ -29,7 +29,9 @@ def auth():
             flash("Invalid username or password", "danger")
             return redirect(url_for("auth.login"))
         
-    return render_template("login.html")
+        return redirect(url_for("main.feed"))
+    
+    return render_template("login.html", form=form)
 
 
 @auth_bp.route("/logout", methods=["POST"], endpoint="logout")
