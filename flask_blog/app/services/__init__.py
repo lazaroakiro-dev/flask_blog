@@ -3,3 +3,4 @@ from .auth_service import create_user
 from .post_service import PostService
 from .vote_service import VoteService
 from .comment_service import CommentService
+from .login_form_service import LoginForm

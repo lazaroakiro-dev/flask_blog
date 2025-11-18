@@ -1,9 +1,13 @@
-## [v1.3.3]
+## [v1.4.0] - 2025-11-16
+### Implement Flask-WTForms
+- Change login form
+
+## [v1.3.3] - 2025-11-15
 ### Added Custom Error Pages
 - 404 Page Not Found
 - 500 Interal Server Error
 
-## [v1.3.2]
+## [v1.3.2] - 2025-11-15
 ### Cleanup Code
 - Clean up models code.
 - Delegate code in main/routes to helpers, services.
